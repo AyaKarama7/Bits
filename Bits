@@ -1,2 +1,5 @@
  the maximum possible XOR result is always 2^(maximumBit) - 1
  prefix xor and Bitmanipulation problem:https://leetcode.com/problems/maximum-xor-for-each-query/
+ prefix xor and Bitmanipulation problem:https://leetcode.com/problems/count-triplets-that-can-form-two-arrays-of-equal-xor/submissions/
+ search a code to solve previous problem in O(1),example:https://lydxlx1.github.io/blog/2020/05/17/leetcode-1442/
+ 
