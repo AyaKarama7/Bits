@@ -26,6 +26,9 @@
  12-rotate Bits
  13-print all subset(strings) of lenghth<=len = 2^len-1 or number of bits =1 <=len
  14-Gray Code
+ 15-precedence
+ 16-print submasks
+ 17-Given 2 arrays A and B ,output how many nums are in both A and B (intersection)
  ***************************************************************************************************************************************
  1-Benifits
  Sometimes, it is low-level optimization, so better time order
@@ -100,7 +103,7 @@ int countNumBits2(int mask) {	//	O(bits Count)		__builtin_popcount--->also used 
 ******************************************************************************************************************************************
 8-GetBit:
 int getBit(int num, int idx) {
-  return ((num >> idx-1) & 1) == 1;		// 110100, idx = 4  -->  110 & 1 = 0 //remove bits before idx then get idx value
+  return ((num >> idx) & 1) == 1;		// 110100, idx = 4  -->  110 & 1 = 0 //remove bits before idx then get idx value
 }
 ******************************************************************************************************************************************
 9-setbit1:
@@ -162,3 +165,58 @@ void printAllSubsets(int len)//len=3-->000 001 010 011 100 101 110 111
 1101		1011	3
 1110		1001	2
 1111
+Code:
+int grayCode(int i) {
+	return i ^ (i>>1);
+}
+
+void printAllSubsetsGray(int len)
+{
+	for (int i = 0; i < (1<<len)-1; ++i)
+	{
+		printNumber(i, len );
+		cout<<"\t\t";
+
+		printNumber( grayCode(i), len );
+
+		cout<<"\t"<<__builtin_popcount(grayCode(i));//number of ones
+		cout<<"\n";
+	}
+}
+******************************************************************************************************************************************
+15-precedence:
+Be careful with operators precedence problems. http://en.wikipedia.org/wiki/Operators_in_C_and_C%2B%2B#Operator_precedence
+X & 7 == 1 		is interpreted as 			X & (7 == 1)	--> (X & 7) == 1
+1<<10 -1 		is interpreted as			= 1<<9			--> (1<<10) - 1
+Watch out from overflow
+1 << 60 Fails. 1 is 32 bitInteger		-->		1LL << 60
+******************************************************************************************************************************************
+16-print submasks:
+void getAllSubMasks(int mask) {//3 --->00011 ,00010 ,00001//5 ---->00101 , 00100 , 00001//4--->00100
+
+	for(int subMask = mask ; subMask ; subMask = (subMask - 1) & mask)
+		printNumber(subMask, 5),cout<<' ';	// this code doesn't print 0
+
+	// For reverse: ~subMask&mask = subMask^mask
+}
+******************************************************************************************************************************************
+17-Given 2 arrays A and B ,output how many nums are in both A and B (intersection):
+void intersection(int A[60], int len1, int B[60], int len2)//A:1 2 3  B:2 4 3
+{
+	int mask1 = 0;//0 0 0 0 0 ...
+	int mask2 = 0;//0 0 0 0 0 ...
+	for (int i = 0; i < len1; ++i)
+		mask1 = setBit1(mask1, A[i]);//0 1 0 0 0 -->0 1 1 0 0 --->0 1 1 1 0
+
+	for (int i = 0; i < len2; ++i)
+		mask2 = setBit1(mask2, B[i]);//0 0 1 0 0 -->0 0 1 0 1 --->0 0 1 1 1
+
+	int inter = mask1 & mask2;//0 0 1 1 0	// In O(1) noes intersection
+
+	for (int i = 0; i <= max(len1, len2); ++i) {
+		if(getBit(inter, i))
+			cout<<i<<" ";
+	}
+	cout<<"\n";
+}
+****************************************************************************************************************************************
