@@ -9,4 +9,156 @@
  https://www.codechef.com/START55D/problems/NZXOR
  https://www.codechef.com/START55D/problems/BALLSEQ
  https://leetcode.com/contest/biweekly-contest-87/problems/smallest-subarrays-with-maximum-bitwise-or/
- 
+ ***************************************************************************************************************************************
+ BITS
+ CONTENT:
+ 1-Benifits
+ 2-& and , | or , ^ xor , ~ not
+ 3-Shift (pow,div,mod)
+ 4-Check if num is even
+ 5-print binary representation
+ 6-flip first bit from right or flip all bits except first bit from right
+ 7-Count bits = 1 
+ 8-GetBit
+ 9-setbit1
+ 10-setbit0
+ 11-flip bit
+ 12-rotate Bits
+ 13-print all subset(strings) of lenghth<=len = 2^len-1 or number of bits =1 <=len
+ 14-Gray Code
+ ***************************************************************************************************************************************
+ 1-Benifits
+ Sometimes, it is low-level optimization, so better time order
+ Sometimes, it drop memory by factor of 8! so better memory order
+ Sometimes, it make code shorter
+ Based 0
+ ***************************************************************************************************************************************
+ 2-& and , | or , ^ xor , ~ not :
+ A B !A A&B A|B 	A^B
+	0	0	 1	 0		 0	 	0
+	0	1	 1	 0		 1	 	1
+	1	0	 0	 0		 1		 1
+	1	1	 0	 1		 1		 0
+ and : all give 0 , but (1&1) give 1
+ or  : all give 1 , but (0&0) give 0
+ xor : A=B-->0 , A!=B=1
+ neg : flip
+ A ^ B ^ C ^ D = E	For any bit in E with 1, must be ODD number of 1s ---> 1^1^1^0=1 but 1^1^1^1=0
+ X ^ 0 = X		
+ X ^ X = 0 , so: (A ^ B ^ C ^ D ^ E) ^ (A ^ B ^ C) = D ^ E
+*****************************************************************************************************************************************
+ 3-Shift (pow,div,mod):
+ x >> i == x/ pow(2,i) --->ex:x>>1=x/2 ,x>>2=x/4  ----->remove last bit , ex: 4>>1=4/2=2-->4=100 and 2=10, so we have removed last bit
+ x << i == x* pow(2,i) --->ex:x<<1=x*2 ,x<<2=x*4  ----->add bit=0 at the last, ex: 2<<1=2*2=4, 2=10 become 4=100 ,ex:3>>1=3*2=6,3=11 become 6 =110
+*****************************************************************************************************************************************
+ 4-Check if num is even :
+ if (num&1)-->odd ,else even
+******************************************************************************************************************************************
+ 5-print binary representation:
+ void printNumber(int n)
+ {
+   if(!n)return;
+	  printNumber(n>>1);	// remove last bit
+	  cout<<(n&1);						// print last bit
+ }
+ print lenght x code:
+ void printNumber(int n, int len)//n=1 ,len=5-->output =00001
+ {
+ 	if(!len)
+		return ;
+
+	 printNumber(n>>1, len-1);	// remove last bit
+	 cout<<(n&1);						// print last bit
+ }
+******************************************************************************************************************************************
+ 6-flip first bit from right or flip all bits except first bit from right:
+ X-1 is very important!
+ X = 840 = 01101001000  x-1 = flip all bits until first right bit=1
+ X-1= 839 = 01101000111		What happened? First bit 16=(2^3) is removed, and 15=2^3-1 is added.
+ X & (X-1) 	= 01101000000		first bit from right removed or flip first bit from right
+ X & ~(X-1) 	= 01101001000 & 10010111000 = 00000001000	value of 1<<SmaintestBitIdx or flip all bits except first bit from right
+******************************************************************************************************************************************
+7-Count bits = 1 :
+ int countNumBits1(int mask) {	// O(bits Length)
+	int ret = 0;	//1101001 -> 110100 -> 11010 -> 1101 -> 110 -> 11 -> 1 -> 0
+	while (mask) {
+		if(mask&1)
+			ret++;
+		mask >>= 1;
+	}
+	return ret;
+}
+-More efficient code based on role 6 :
+int countNumBits2(int mask) {	//	O(bits Count)		__builtin_popcount--->also used to count bits=1
+	int ret = 0;
+	while (mask) 	{
+		mask &= (mask-1);//filb first bit =0 from right
+		++ret;	// Simply remove the last bit and so on
+	}
+	return ret;
+}
+******************************************************************************************************************************************
+8-GetBit:
+int getBit(int num, int idx) {
+  return ((num >> idx-1) & 1) == 1;		// 110100, idx = 4  -->  110 & 1 = 0 //remove bits before idx then get idx value
+}
+******************************************************************************************************************************************
+9-setbit1:
+int setBit1(int num, int idx) {// num=2-->10 idx=0 -->3=11
+	return num | (1<<idx);//10 | pow(2,0)=10 |01 = 11 //if zero base idx-1
+}
+******************************************************************************************************************************************
+10-setbit0:
+int setBit0(int num, int idx) {
+	return num & ~(1<<idx);				// 110100, idx = 3  -->  110100 & ~000100 = 110100 & 111011 //if zero base idx-1
+}
+******************************************************************************************************************************************
+11-flip bit:
+int flipBit(int num, int idx) {
+	return num ^ (1<<idx);////if zero base idx-1
+}
+******************************************************************************************************************************************
+12-rotate Bits:make last d bits be first d bits and first be last ,ex:0000000000000000000011001101110 -> rotate 5 -> 0111000000000000000000000110011
+Left:
+int leftRotate(int n, unsigned int d)
+{   /*n=3=00011,d=2,out=11000
+     n<<d n*pow(2,d)to make first d bits = last removed-->1100
+     INT_BITS=total number of bits =5
+     n >> (INT_BITS - d)to remove last d bits-->000*/
+    return (n << d)|(n >> (INT_BITS - d));
+}
+Right:
+int rightRotate(int n, unsigned int d)
+{
+    return (n >> d)|(n << (INT_BITS - d));
+}
+******************************************************************************************************************************************
+13-print all subset(strings) of lenghth<=len = 2^len-1 or number of bits =1 <=len:
+void printAllSubsets(int len)//len=3-->000 001 010 011 100 101 110 111 
+{
+	for (int i = 0; i < (1<<len); ++i)
+		printNumber(i, len);
+
+	// For reversed order. Either reverse each item or work from big to small
+	//for (int i = (1<<len); i >= 0 ; --i)
+	//	printNumber(i, len);
+}
+******************************************************************************************************************************************
+14-Gray Code:  is a binary numeral system where two successive values differ in only one bit
+ (1)   (2)(3)
+0000		0000	0    (1)-->represents numbers in ordenary system  (2)represents numbers in Gray system (3)number of bits=1
+0001		0001	1
+0010		0011	2
+0011		0010	1
+0100		0110	2
+0101		0111	3
+0110		0101	2
+0111		0100	1
+1000		1100	2
+1001		1101	3
+1010		1111	4
+1011		1110	3
+1100		1010	2
+1101		1011	3
+1110		1001	2
+1111
