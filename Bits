@@ -30,6 +30,8 @@
  16-print submasks
  17-Given 2 arrays A and B ,output how many nums are in both A and B (intersection)
  18-bool visits
+ 19-bitset
+ 20-check if number is pos or neg
  ***************************************************************************************************************************************
  1-Benifits
  Sometimes, it is low-level optimization, so better time order
@@ -279,3 +281,8 @@ void STL() {
 
 	cout<<x<<"\n";			// display a string of N bits
 }
+****************************************************************************************************************************************
+20-check if number is pos or neg:
+if last bit from left =0 then pos else neg.
+****************************************************************************************************************************************
+
