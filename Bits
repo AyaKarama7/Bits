@@ -32,6 +32,7 @@
  18-bool visits
  19-bitset
  20-check if number is pos or neg
+ 21-counting traling and leading zeros
  ***************************************************************************************************************************************
  1-Benifits
  Sometimes, it is low-level optimization, so better time order
@@ -142,6 +143,7 @@ int rightRotate(int n, unsigned int d)
 13-print all subset(strings) of lenghth<=len = 2^len-1 or number of bits =1 <=len:
 void printAllSubsets(int len)//len=3-->000 001 010 011 100 101 110 111 
 {
+     //if you have arr= 1 2 3 -->all subsets= 000-->take no ele,001-->take first ele,010--->take second el,011-->take first and second ele....
 	for (int i = 0; i < (1<<len); ++i)
 		printNumber(i, len);
 
@@ -271,7 +273,7 @@ void STL() {
 	x.none();				// Returns true if no bits are set.
 	x.test(15);
 	x.to_ulong();			// Returns an unsigned long represent mask (decimal value)
-
+        x.to_string();
 	// The most interesting
 	if(x[2] == 0)
 		;
@@ -285,4 +287,10 @@ void STL() {
 20-check if number is pos or neg:
 if last bit from left =0 then pos else neg.
 ****************************************************************************************************************************************
+21-counting traling and leading zeros:
+int cntt=__biltin_ctz(n);
+int cntl=__biltin_clz(n);
+****************************************************************************************************************************************
+
+
 
