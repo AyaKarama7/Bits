@@ -204,6 +204,10 @@ void getAllSubMasks(int mask) {//3 --->00011 ,00010 ,00001//5 ---->00101 , 00100
 
 	// For reverse: ~subMask&mask = subMask^mask
 }
+conditions:
+The set of the digit positions containing 1 in the binary representation of submask is a subset 
+of the set of the digit positions containing 1 in the binary representation of mask.
+That is, the following holds for every non-negative integer k: if the digit in the "2^k s" place of submask is 1, the digit in the 2^ks place of mask is 1.
 ******************************************************************************************************************************************
 17-Given 2 arrays A and B ,output how many nums are in both A and B (intersection):
 void intersection(int A[60], int len1, int B[60], int len2)//A:1 2 3  B:2 4 3
