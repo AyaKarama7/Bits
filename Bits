@@ -34,6 +34,7 @@
  19-bitset
  20-check if number is pos or neg
  21-counting traling and leading zeros
+ 22-find xor
  ***************************************************************************************************************************************
  1-Benifits
  Sometimes, it is low-level optimization, so better time order
@@ -297,6 +298,18 @@ if last bit from left =0 then pos else neg.
 int cntt=__biltin_ctz(n);
 int cntl=__biltin_clz(n);
 ****************************************************************************************************************************************
-
+22-find xor:
+if you have an array a=0 1 2 3 and b=4 5 6 7 ,find x which all(a)^x=b
+solution:
+0:3 --->4 7 6 5 ,0 1 2 3 -->7 6 5 4
+       100 
+       111 
+       110 
+       101 
+       ----
+       111
+       -if num of ones > zeros --->i bit in x = 1 
+       -if num of ones < zeros --->i bit in x = 0
+       --if num of ones = zeros --->i bit in x = 1 or 0 
 
 
