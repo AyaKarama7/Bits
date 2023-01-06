@@ -35,6 +35,7 @@
  20-check if number is pos or neg
  21-counting traling and leading zeros
  22-find xor
+ 23-prefix or
  ***************************************************************************************************************************************
  1-Benifits
  Sometimes, it is low-level optimization, so better time order
@@ -311,5 +312,44 @@ solution:
        -if num of ones > zeros --->i bit in x = 1 
        -if num of ones < zeros --->i bit in x = 0
        --if num of ones = zeros --->i bit in x = 1 or 0 
-
+******************************************************************************************************************************************
+23-prefix or:
+to do prefix or :
+for(int i=0;i<n;i++)cin>>v[i],p|=v[i];
+to remove p[l]--->prefix sum(2,4)=prefix sum[4]-prefix sum[1];-->what about OR???
+to do that do a vector of 32 bits and then :
+if we have 1 2 3-->001 010 011
+when you add 1 to or v:0 0 1  --->1 
+when you add 2 to or v:0 1 1  --->3
+when you add 3 to or v:0 2 2  --->3 
+when you remove 1    v:0 2 1  --->3
+when you remove 2    2:0 1 1  --->3
+and if you have variable r contains value of oring seq or prefix so to remove v[l] from it you need to sub all bits =1 in it from their idx in v 
+and if v[idx] become 0 remove bit from x
+for more clarification see this (find min lenghth for subarr with max oring value)
+while(l<n)// l=0--->start n-->vector end  (2 pointer)
+	{
+	    while(r<n&&x!=p&&(x|v[r])<=p)//p --->max oring value=oring for all array elements 
+	    {
+	        
+	        bitset<32>b(v[r]);
+	        for(int i=0;i<32;i++)
+	        {
+	            if(b[i])bit[i]++;//increase number of bits=1 
+	        }
+	        x|=v[r];r++;
+	        if(x==p)break;
+	    }
+	    if(x==p)ans=min(ans,r-l);//4 
+	   
+	    bitset<32>rem(v[l]),xx(x);
+	    for(int i=0;i<32;i++)
+	    {
+	        if(rem[i])bit[i]--;//decrease ones
+	        if(bit[i]==0)xx[i]=0
+	    }
+	    x=xx.to_ulong();
+	    l++;
+	}
+ for more clarification see this problem solution:https://codeforces.com/group/u3Ii79X3NY/contest/272628/problem/V
 
