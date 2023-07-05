@@ -14,6 +14,8 @@
  BITS
  CONTENT:
  *decimal number is the summation of 2^pos where bits=1 in binary representation of n-->5=101=2^0+2^2=5
+ *Binary representation of negatives is greater than positives in ones :
+ -2-->has one 1  but -2 has 63 1 if we used a bitset of size 64 as all zeros be 1 an all ones be 0
  1-Benifits
  2-& and , | or , ^ xor , ~ not
  3-Shift (pow,div,mod)
