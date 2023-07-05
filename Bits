@@ -100,7 +100,7 @@
 	return ret;
 }
 -More efficient code based on role 6 :
-int countNumBits2(int mask) {	//	O(bits Count)		__builtin_popcount--->also used to count bits=1
+int countNumBits2(int mask) {	//	O(bits Count)		__builtin_popcount--->also used to count bits=1-->work with int not ll
 	int ret = 0;
 	while (mask) 	{
 		mask &= (mask-1);//filb first bit =0 from right
