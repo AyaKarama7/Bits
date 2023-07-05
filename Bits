@@ -13,6 +13,7 @@
  ***************************************************************************************************************************************
  BITS
  CONTENT:
+ *decimal number is the summation of 2^pos where bits=1 in binary representation of n-->5=101=2^0+2^2=5
  1-Benifits
  2-& and , | or , ^ xor , ~ not
  3-Shift (pow,div,mod)
