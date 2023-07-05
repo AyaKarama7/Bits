@@ -39,6 +39,7 @@
  21-counting traling and leading zeros
  22-find xor
  23-prefix or
+ 24-to check if the number is power of two :if ((n & (~(n - 1))) == n)
  ***************************************************************************************************************************************
  1-Benifits
  Sometimes, it is low-level optimization, so better time order
