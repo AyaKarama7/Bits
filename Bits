@@ -40,6 +40,7 @@
  22-find xor
  23-prefix or
  24-to check if the number is power of two :if ((n & (~(n - 1))) == n)
+ 25-get max subsequence where evry pair[i,j] ai&aj>=ai^aj
  ***************************************************************************************************************************************
  1-Benifits
  Sometimes, it is low-level optimization, so better time order
@@ -356,4 +357,30 @@ while(l<n)// l=0--->start n-->vector end  (2 pointer)
 	    l++;
 	}
  for more clarification see this problem solution:https://codeforces.com/group/u3Ii79X3NY/contest/272628/problem/V
+******************************************************************************************************************************
+25-get max subsequence where evry pair[i,j] ai&aj>=ai^aj:
+ai&aj>=ai^aj --->when first indices from left in both ai,aj ==1,ex:
+ai: 1 1 0 0
+aj: 1 0 0 0
+& : 1 0 0 0
+^ : 0 1 0 0
+ai: 0 1 1
+aj: 1 1 1
+& : 0 1 1
+^ : 1 0 0
+so we need to find max frequency[length of num in binary] like this 3--->11-->length 2 so it can be in a sequence all nums in with length 2
+for more calrification see this code:
+map<ll,ll>mp;
+void getlast(ll x)
+{
+    ll idx=0;
+    while(x)
+    {
+        idx++;
+        x/=2;
+    }
+    mp[idx]++;
+}
+ll ans=0;
+for(auto it:mp)ans=max(ans,it.second);
 
